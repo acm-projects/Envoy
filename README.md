@@ -5,7 +5,7 @@
 # Envoy 🎓
 The rise of virtual learning has changed our way of obtaining new knowledge but many roadblocks exist in the world of online education. Many good tutorials or online resources can be in a different language. Envoy is a website that helps people learn from online videos get access to content they may not be able to understand. You can get translated versions of the best tutorial videos and bridge the gap in virtual learning.
  
-## MVP
+## MVP ❗
 * Accessible website UI/UX to show translated and educational content
 * Upload videos/documents to be translated
 * Provide user with subtitles or a version of the document in selected language (Start with English, Hindi, Mandarin)
@@ -33,7 +33,7 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 | 9  **(BN5)**      | Finish slide deck and begin presentation prep.                                                                          |
 | 10                | Practice presentation and add finishing touches!                                                   |
  
-## Tech Stack
+## Tech Stack 💻
 * Frontend:
   * [Figma](https://www.figma.com/)/Adobe XD for wireframing
   * [React.js](https://reactjs.org/)
@@ -54,7 +54,7 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
   
  
  
-## Miscellaneous Resources
+## Miscellaneous Resources 	📚
 * [ACM’s Advice](https://docs.google.com/document/d/18Zi3DrKG5e6g5Bojr8iqxIu6VIGl86YBSFlsnJnlM88/edit) for you to be successful in ACM Projects
 * [React Front-End Tutorial](https://reactjs.org/tutorial/tutorial.html)
   * [More React Front-End Videos](https://www.youtube.com/watch?v=G-Cr00UYokU)
