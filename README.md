@@ -2,7 +2,7 @@
 <img src="https://github.com/acm-projects/Envoy/blob/main/Translationai.jpg" width="625"/>
 </p>
 
-# Envoy
+# Envoy 🎓
 The rise of virtual learning has changed our way of obtaining new knowledge but many roadblocks exist in the world of online education. Many good tutorials or online resources can be in a different language. Envoy is a website that helps people learn from online videos get access to content they may not be able to understand. You can get translated versions of the best tutorial videos and bridge the gap in virtual learning.
  
 ## MVP
@@ -19,7 +19,7 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 * Social features to make the website more collaborative instead of being a tool 
  
  
- ## Milestones
+ ## Milestones 📆
 | Week # | Deliverables |
 |--------|--------------|
 | 1 **(BN1)**       | Decide meeting dates, team responsibilities/setup, learn git, discuss MVP and project goals, Set-up IDE, download frontend and backend frameworks, watch tutorials for the techstack                                  |                                                             
