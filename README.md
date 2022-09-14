@@ -63,13 +63,12 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
  
  
 ## GitHub Cheat Sheet
-(Thanks Emily ^-^)
  
 General Use
  
 | Command | Description |
 | ------ | ------ |
-| cd "FIREUp" | Change directories over to our repository |
+| cd "Envoy" | Change directories over to our repository |
 | git branch | Lists branches for you |
 | git branch "branch name" | Makes new branch |
 | git checkout "branch name" | Switch to branch |
