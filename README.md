@@ -22,7 +22,6 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
  * quizzes and small assignments
 * collaborative feature where people can make suggestions for errors in the translations
 * Add portions of textbooks / other resources to make them more Accessible
-* Social features to make the website more collaborative instead of being a tool 
  
  
  ## Milestones 📆
