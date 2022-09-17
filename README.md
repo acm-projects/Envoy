@@ -8,12 +8,18 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 ## MVP ❗
 * Accessible website UI/UX to show translated and educational content
 * Upload videos/documents to be translated
-* Provide user with subtitles or a version of the document in selected language (Start with English, Hindi, Mandarin)
+ * store previous content
+* Provide user with subtitles or a version of the document in selected language (Start with English, Hindi, Mandarin, as well as some languages that are underrepresented.)
   * Take English spoken video, provide Hindi or Mandarin subtitles and vice versa
-* Create pre-curated categories of learning material
+* Take generated subtitles and use Text-to-Speech to completely translate a video
+* Interactive elements to deepen learning
+ * points for each user
+ * dynamic fun fact word translation
  
 ## Stretch Goals
-* Take generated subtitles and use Text-to-Speech to completely translate a video
+* Create public library of all users uploaded content
+* Create pre-curated categories of learning material
+ * quizzes and small assignments
 * collaborative feature where people can make suggestions for errors in the translations
 * Add portions of textbooks / other resources to make them more Accessible
 * Social features to make the website more collaborative instead of being a tool 
