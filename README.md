@@ -67,11 +67,11 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 * [Different Language Dictionaries](https://www.wordreference.com/)
  
 ## Meet The Devs
-* Jaszmine Defranco
-* Muaaz Abed
-* Harper Wood
-* Aditya Udyavar
-* Chelsea Chourp
+* Jaszmine Defranco - Full-Stack
+* Muaaz Abed - Full-Stack
+* Harper Wood - Full-Stack
+* Aditya Udyavar - Back-End
+* Chelsea Chourp - Front-End
 
 ## GitHub Cheat Sheet
  
