@@ -13,8 +13,8 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
   * Take English spoken video, provide Hindi or Mandarin subtitles and vice versa
 * Take generated subtitles and use Text-to-Speech to completely translate a video
 * Interactive elements to deepen learning
- * points for each user
- * dynamic fun fact word translation
+  * points for each user
+  * dynamic fun fact word translation
  
 ## Stretch Goals
 * Create public library of all users uploaded content
