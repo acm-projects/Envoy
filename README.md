@@ -66,7 +66,13 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 * [React Back-End REST API Tutorial](https://www.youtube.com/watch?v=fgTGADljAeg)
 * [Different Language Dictionaries](https://www.wordreference.com/)
  
- 
+## Meet The Devs
+* Jaszmine Defranco
+* Muaaz Abed
+* Harper Wood
+* Aditya Udyavar
+* Chelsea Chourp
+
 ## GitHub Cheat Sheet
  
 General Use
