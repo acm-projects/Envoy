@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/acm-projects/Envoy/blob/main/Translationai.jpg" width="625"/>
+<img src="https://github.com/acm-projects/Envoy/blob/main/src/assets/Translationai.jpg" width="625"/>
 </p>
 
 # Envoy 🎓
@@ -67,7 +67,7 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 * [Different Language Dictionaries](https://www.wordreference.com/)
  
 ## Meet The Devs
-* Jaszmine Defranco - Full-Stack
+* Jaszmine DeFranco - Full-Stack
 * Muaaz Abed - Full-Stack
 * Harper Wood - Full-Stack
 * Aditya Udyavar - Back-End
