@@ -13,14 +13,14 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
   * Take English spoken video, provide Hindi or Mandarin subtitles and vice versa
 * Take generated subtitles and use Text-to-Speech to completely translate a video
 * Interactive elements to deepen learning
-  * points for each user
-  * dynamic fun fact word translation
+  * Points for each user
+  * Dynamic fun fact word translation
  
 ## Stretch Goals
 * Create public library of all users uploaded content
 * Create pre-curated categories of learning material
- * quizzes and small assignments
-* collaborative feature where people can make suggestions for errors in the translations
+ * Quizzes and small assignments
+* Collaborative feature where people can make suggestions for errors in the translations
 * Add portions of textbooks / other resources to make them more Accessible
  
  
@@ -88,8 +88,22 @@ General Use
 | git commit -m "Testing123" | Commit with message |
 | git push origin "branch" | Push to branch |
 | git pull origin "branch" | Pull updates from a specific branch |
- 
- 
+
+## How To Use
+
+Frontend:
+
+```git clone``` -> ```npm install``` -> ```cd frontend``` -> ```npm install``` -> ```npm start```
+
+
+Backend:
+
+```git clone``` -> ```npm install``` -> ```npm run server```
+
+
+Running the Full Application:
+
+```npm run dev```
  
  
 
