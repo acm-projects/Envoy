@@ -1,6 +1,6 @@
 {
-  "short_name": "Envoy",
-  "name": "Envoy",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
