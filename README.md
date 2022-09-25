@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/acm-projects/Envoy/blob/main/src/assets/Translationai.jpg" width="625"/>
+<img src="https://github.com/acm-projects/Envoy/blob/main/frontend/src/assets/Translationai.jpg" width="625"/>
 </p>
 
 # Envoy 🎓
