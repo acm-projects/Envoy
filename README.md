@@ -8,7 +8,7 @@ The rise of virtual learning has changed our way of obtaining new knowledge but 
 ## MVP ❗
 * Accessible website UI/UX to show translated and educational content
 * Upload videos/documents to be translated
- * store previous content
+ * Store previous content
 * Provide user with subtitles or a version of the document in selected language (Start with English, Hindi, Mandarin, as well as some languages that are underrepresented.)
   * Take English spoken video, provide Hindi or Mandarin subtitles and vice versa
 * Take generated subtitles and use Text-to-Speech to completely translate a video

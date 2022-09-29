@@ -2,6 +2,7 @@ const { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } = re
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const asyncHandler = require('express-async-handler')
 const File = require('../models/fileModel');
+const User = require('../models/userModel')
 const crypto = require('crypto');
 require("express");
 
@@ -34,9 +35,9 @@ const randomFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
 // @route   GET /api/files
 // @access  Private
 const getFiles = asyncHandler(async (req, res) => {
-    const files = await File.find({})
+    const files = await File.find({ user: req.user.id })
 
-    // Iterates through all files and retuns them
+    // Iterates through all files and returns them along with an S3 signed url
     for (f of files) {
         const getObjectParams = {
             Bucket: bucketName,
@@ -50,12 +51,32 @@ const getFiles = asyncHandler(async (req, res) => {
     res.send(files)
 })
 
-//! May be deleted in the future
 // @desc    Get a file
 // @route   GET /api/files/:id
 // @access  Private
 const getFile = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: `Get file ${req.params.id}` })
+    const file = await File.findById(req.params.id)
+
+    if (!file) {
+        res.status(404)
+        throw new Error('File not found')
+    }
+
+    if (file.user.toString() !== req.user.id) {
+        res.status(401)
+        throw new Error('Not authorized')
+    }
+
+    // Returns the file along with an S3 signed url
+    const getObjectParams = {
+        Bucket: bucketName,
+        Key: file.fileName,
+    }
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    file.fileUrl = url
+
+    res.send(file)
 })
 
 // @desc    Upload file
@@ -94,6 +115,7 @@ const uploadFile = asyncHandler(async (req, res) => {
 
     // Stores file information in database
     const fileInfo = await File.create({
+        user: req.user.id,
         fileName,
         title
     })
@@ -119,6 +141,20 @@ const deleteFile = asyncHandler(async (req, res) => {
     if (!file) {
         res.status(404)
         throw new Error('File not found')
+    }
+
+    const user = await User.findById(req.user.id)
+
+    // Check for user
+    if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Make sure the file belongs to the logged in user
+    if (file.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
     }
 
     const params = {

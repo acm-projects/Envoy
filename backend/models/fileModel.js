@@ -1,5 +1,10 @@
 const mongoose = require('mongoose')
 const fileSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     fileName: {
         type: String,
         required: [true, 'Please add a name'],
