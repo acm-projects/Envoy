@@ -7,6 +7,9 @@ const fileSchema = mongoose.Schema({
     title: {
         type: String,
         required: [true, 'Please add an email'],
+    },
+    fileUrl: {
+        type: String
     }
 }, {
     timestamps: true

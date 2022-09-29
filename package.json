@@ -21,6 +21,7 @@
   "homepage": "https://github.com/acm-projects/Envoy#readme",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.180.0",
+    "@aws-sdk/s3-request-presigner": "^3.181.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^16.0.2",
