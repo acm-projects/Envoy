@@ -1,4 +1,5 @@
 const { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { TranscribeClient, StartTranscriptionJobCommand } = require("@aws-sdk/client-transcribe");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const asyncHandler = require('express-async-handler')
 const File = require('../models/fileModel');
@@ -23,6 +24,15 @@ const s3 = new S3Client({
     },
     region: bucketRegion,
 })
+
+// Configure Amazon Transcribe
+const transcribeClient = new TranscribeClient({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey
+    },
+    region: bucketRegion
+});
 
 // Helper function that creates a random image name
 const randomFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
@@ -96,22 +106,49 @@ const uploadFile = asyncHandler(async (req, res) => {
         throw new Error('File too big! Size must be less than 100MB.')
     }
 
-    if (!req.file.mimetype.startsWith('video')) {
+    const fileType = req.file.mimetype.slice(-3)
+    if (fileType !== 'mp4') {
         res.status(400)
-        throw new Error('File must be a video')
+        throw new Error('File must be in MP4 format')
     }
 
     // Uploads to S3
     const fileName = randomFileName()
-    const params = {
+    const originalVideoParams = {
         Bucket: bucketName,
         Key: fileName,
         Body: req.file.buffer,
         ContentType: req.file.mimetype
     }
 
-    const command = new PutObjectCommand(params)
-    await s3.send(command)
+    const s3command = new PutObjectCommand(originalVideoParams)
+    await s3.send(s3command)
+
+    // Transcribe video
+    const transcriptionName = fileName + "_transcription"
+    const params = {
+        TranscriptionJobName: transcriptionName,
+        LanguageCode: 'en-US', // For example, 'en-US'
+        MediaFormat: fileType, // For example, 'wav'
+        Media: {
+            MediaFileUri: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
+        },
+        Subtitles: {
+            Formats: ['srt']
+        },
+        OutputBucketName: bucketName
+    }
+
+    const transcribeCommand = new StartTranscriptionJobCommand(params);
+    await transcribeClient.send(transcribeCommand)
+
+    // TODO - Make the output bucket different than the bucket for normal videos
+    // TODO - Merge subtitles with video with ffmpeg to test (won't be in final product)
+
+    // All of these can be done using the AWS article:
+    // TODO - Translate the transcript to a different language
+    // TODO - Create a new video with translated subtitles
+    // TODO - Text-to-speech
 
     // Stores file information in database
     const fileInfo = await File.create({
