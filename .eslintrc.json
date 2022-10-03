@@ -5,36 +5,31 @@
         "es2021": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "airbnb"
     ],
     "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "plugins": [
-        "react",
-        "sort-imports-requires"
+        "react"
     ],
     "rules": {
+        "no-undef": "off",
         "indent": [
             "error",
-            "tab"
+            4
         ],
         "linebreak-style": [
             "error",
             "windows"
         ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ],
-        "no-undef": "off",
-        "sort-imports-requires/sort-imports": "error",
-        "sort-imports-requires/sort-requires": "error"
+        "no-console": "off",
+        "prefer-destructuring": "off",
+        "no-restricted-syntax": "off",
+        "no-await-in-loop": "off",
+        "no-underscore-dangle": "off",
+        "no-unused-vars": "off"
     }
 }
