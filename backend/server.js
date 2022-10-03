@@ -1,8 +1,8 @@
-const express = require('express')
-const colors = require('colors')
-const dotenv = require('dotenv').config()
+require('colors')
+require('dotenv').config()
+const { connectDB } = require('./config/db')
 const { errorHandler } = require('./middleware/errorMiddleware')
-const connectDB = require('./config/db')
+const express = require('express')
 const port = process.env.PORT || 5000
 
 connectDB()
