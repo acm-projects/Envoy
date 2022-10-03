@@ -3,6 +3,3 @@ node_modules
 
 # environment variables
 .env
-
-# linting rules
-.eslinstrc.json
