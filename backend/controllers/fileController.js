@@ -2,7 +2,8 @@ require('express');
 const {
     DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client,
 } = require('@aws-sdk/client-s3');
-const getSignedUrl = require('@aws-sdk/s3-request-presigner');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+const { PythonShell } = require('python-shell');
 const asyncHandler = require('express-async-handler');
 const crypto = require('crypto');
 const User = require('../models/userModel');
@@ -25,6 +26,9 @@ const s3 = new S3Client({
     },
     region: bucketRegion,
 });
+
+// Configure python-shell
+PythonShell.defaultOptions = { scriptPath: 'backend/scripts' };
 
 // Helper function that creates a random image name
 const randomFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
@@ -118,7 +122,15 @@ const uploadFile = asyncHandler(async (req, res) => {
     const s3command = new PutObjectCommand(originalVideoParams);
     await s3.send(s3command);
 
-    // TODO - Call Python Script
+    // Calls Python script to transcribe, translate, and add text-to-speech to the video
+    // Placeholder code
+    PythonShell.run('placeholder.py', null, (error, response) => {
+        if (error) {
+            throw error;
+        }
+
+        console.log(response);
+    });
 
     // Stores file information in database
     const fileInfo = await File.create({
