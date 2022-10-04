@@ -14,19 +14,16 @@ const Navbar = () => {
                         <Link to='/'>Home</Link>
                     </li>
                     <li>
-                        <Link to='/about'>About</Link>
-                    </li>
-                    <li>
                         <Link to='/upload'>Upload</Link>
                     </li>
                     <li>
-                        <Link to='/profile'>Profile</Link>
+                        <Link to='/account'>Account</Link>
                     </li>
                     <li>
-                        <Link to='/login'>Log In</Link>
+                        <Link to='/login'>Log in</Link>
                     </li>
                     <li>
-                        <Link to='/signup'>Sign Up</Link>
+                        <Link to='/signup'>Sign up</Link>
                     </li>
                 </ul>
             </nav>
