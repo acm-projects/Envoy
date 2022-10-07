@@ -2,13 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './styles/Navbar.css'
 
-const Navbar = () => {
-    return (
-        <div className='sum'>
+export default function Navbar() {
+    return <nav className="nav">
             <div className="logo">
                 Envoy
             </div>
-            <nav className='item'>
+
                 <ul className='ul'>
                     <li>
                         <Link to='/'>Home</Link>
@@ -26,9 +25,6 @@ const Navbar = () => {
                         <Link to='/signup'>Sign up</Link>
                     </li>
                 </ul>
-            </nav>
-        </div>
-    )
-}
 
-export default Navbar
+    </nav>
+}
