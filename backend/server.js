@@ -10,6 +10,9 @@ connectDB();
 
 const app = express();
 
+// Disable "X-Powered-By" headers for security
+app.disable('x-powered-by');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
