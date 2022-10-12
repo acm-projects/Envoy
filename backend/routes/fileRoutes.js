@@ -1,12 +1,11 @@
 const express = require('express');
-
-const router = express.Router();
 const multer = require('multer');
 const { protect } = require('../middleware/authMiddleware');
 const {
     deleteFile, getFile, getFiles, uploadFile,
 } = require('../controllers/fileController');
 
+const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
