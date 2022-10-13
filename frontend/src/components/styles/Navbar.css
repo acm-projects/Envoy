@@ -8,6 +8,7 @@ body {
 
 .nav {
     background-color: black;
+    background-image: linear-gradient(to right, rgb(90, 0, 235) , rgb(3, 87, 212));
     color: white;
     display: flex;
     justify-content: space-between;
@@ -31,21 +32,36 @@ body {
 }
 
 .nav li:hover {
-    background-color: #777;
+    color: red;
+    transition: 0.5s;
 }
 
-.nav ul {
+.nav .navbarLeft{
     padding: 0;
     margin: 0;
     list-style: none;
-    display: flex;
     gap: .25rem;
+
+    display: flex;
+    position: relative;
+    float: left;
+}
+
+.nav .navbarRight{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    gap: .25rem;
+
+    display: flex;
+    justify-content: right;
+    position: relative;
 }
 
 .logo {
     align-items: center;
     margin-bottom: .5rem;
     color: white;
-    font-size: 40px;
+    font-size: 35px;
     font-weight: bolder;
 }
