@@ -7,7 +7,7 @@ export default function Navbar() {
         <div className="logo">
             Envoy
         </div>
-        <ul className='ul'>
+        <ul className="navbarLeft">
             <li>
                 <Link to='/'>Home</Link>
             </li>
@@ -17,6 +17,9 @@ export default function Navbar() {
             <li>
                 <Link to='/account'>Account</Link>
             </li>
+        </ul>
+
+        <ul class="navbarRight">
             <li>
                 <Link to='/login'>Log in</Link>
             </li>
