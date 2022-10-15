@@ -31,7 +31,7 @@ const s3 = new S3Client({
 PythonShell.defaultOptions = { scriptPath: 'backend/scripts' };
 
 // Helper function that creates a random image name
-const randomFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
+const randomFileName = (bytes = 32) => `${crypto.randomBytes(bytes).toString('hex')}.mp4`;
 
 /**
  * API
@@ -123,13 +123,24 @@ const uploadFile = asyncHandler(async (req, res) => {
     await s3.send(s3command);
 
     // Calls Python script to transcribe, translate, and add text-to-speech to the video
-    // Placeholder code
-    PythonShell.run('placeholder.py', null, (error, response) => {
+    const options = {
+        args: [
+            bucketRegion,
+            bucketName,
+            fileName,
+            'hi',
+            accessKey,
+            secretAccessKey,
+        ],
+    };
+
+    PythonShell.run('translatevideo.py', options, (error, response) => {
         if (error) {
             throw error;
         }
 
         console.log(response);
+        const fileUrl = response[response.length - 1];
     });
 
     // Stores file information in database
@@ -137,6 +148,7 @@ const uploadFile = asyncHandler(async (req, res) => {
         user: req.user.id,
         fileName,
         title,
+        fileUrl,
     });
 
     if (fileInfo) {
