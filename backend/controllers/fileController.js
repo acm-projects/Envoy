@@ -30,6 +30,34 @@ const s3 = new S3Client({
 // Configure python-shell
 PythonShell.defaultOptions = { scriptPath: 'backend/scripts' };
 
+const translateVideo = (videoFileName, languageCode) => {
+    const options = {
+        args: [
+            bucketRegion,
+            bucketName,
+            videoFileName,
+            languageCode,
+            accessKey,
+            secretAccessKey,
+        ],
+    };
+
+    // Runs the video translation script
+    return new Promise((resolve, reject) => {
+        PythonShell.run('translatevideo.py', options, (error, response) => {
+            if (error) {
+                console.log(error);
+                reject();
+            }
+
+            // Returns the S3 File Url of the translated video
+            console.log(response);
+            const fileUrl = response[response.length - 1];
+            resolve(fileUrl);
+        });
+    });
+};
+
 // Helper function that creates a random image name
 const randomFileName = (bytes = 32) => `${crypto.randomBytes(bytes).toString('hex')}.mp4`;
 
@@ -87,14 +115,15 @@ const getFile = asyncHandler(async (req, res) => {
     res.send(file);
 });
 
-// @desc    Upload file
+// @desc    Upload a video to be translated
 // @route   POST /api/files
 // @access  Private
 const uploadFile = asyncHandler(async (req, res) => {
     const title = req.body.title;
+    const outputLanguage = req.body.outputLanguage;
 
     // Validating input
-    if (!req.file || !title) {
+    if (!req.file || !title || !outputLanguage) {
         res.status(400);
         throw new Error('Please add all fields');
     }
@@ -110,7 +139,9 @@ const uploadFile = asyncHandler(async (req, res) => {
         throw new Error('File must be in MP4 format');
     }
 
-    // Uploads to S3
+    // TODO - Validate language code
+
+    // Uploads file to S3
     const fileName = randomFileName();
     const originalVideoParams = {
         Bucket: bucketName,
@@ -122,44 +153,32 @@ const uploadFile = asyncHandler(async (req, res) => {
     const s3command = new PutObjectCommand(originalVideoParams);
     await s3.send(s3command);
 
-    // Calls Python script to transcribe, translate, and add text-to-speech to the video
-    const options = {
-        args: [
-            bucketRegion,
-            bucketName,
+    // Calls script to transcribe, translate, and add text-to-speech to the given video
+    try {
+        const fileUrl = await translateVideo(fileName, outputLanguage);
+
+        // Stores file information in database
+        const fileInfo = await File.create({
+            user: req.user.id,
             fileName,
-            'hi',
-            accessKey,
-            secretAccessKey,
-        ],
-    };
-
-    PythonShell.run('translatevideo.py', options, (error, response) => {
-        if (error) {
-            throw error;
-        }
-
-        console.log(response);
-        const fileUrl = response[response.length - 1];
-    });
-
-    // Stores file information in database
-    const fileInfo = await File.create({
-        user: req.user.id,
-        fileName,
-        title,
-        fileUrl,
-    });
-
-    if (fileInfo) {
-        res.status(200).json({
-            _id: fileInfo.id,
-            fileName: fileInfo.fileName,
-            title: fileInfo.title,
+            title,
+            fileUrl,
         });
-    } else {
+
+        if (fileInfo) {
+            res.status(200).json({
+                _id: fileInfo.id,
+                fileName: fileInfo.fileName,
+                title: fileInfo.title,
+                fileUrl: fileInfo.fileUrl,
+            });
+        } else {
+            res.status(400);
+            throw new Error('Invalid file data');
+        }
+    } catch (error) {
         res.status(400);
-        throw new Error('Invalid file data');
+        throw new Error('An error was encountered while translating this video');
     }
 });
 
