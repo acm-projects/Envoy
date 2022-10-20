@@ -25,7 +25,7 @@ def translateFile(
     fileName, sourceLangCode, targetLangCode, region, accessKey, secretAccessKey
 ):
     print("\n==> Translating from " + sourceLangCode + " to " + targetLangCode)
-    
+
     # Open file
     text_file = open(fileName, "r")
     text = text_file.read()
@@ -52,21 +52,24 @@ def translateFile(
 # Function: createTranscribeJob
 # Purpose: Function to format the input parameters and invoke the Amazon Transcribe service
 # Parameters:
-#                 region - the AWS region in which to run AWS services (e.g. "us-east-1")
-#                 bucket - the Amazon S3 bucket name (e.g. "mybucket/") found in region that contains the media file for processing.
 #                 fileName - the name of the content to process (e.g. "myvideo.mp4")
+#                 region - the AWS region in which to run AWS services (e.g. "us-east-1")
+#                 bucketName - the Amazon S3 bucket name (e.g. "mybucket/") found in region that contains the media file for processing.
 #
 # ==================================================================================
-def createTranscribeJob(region, bucket, fileName, accessKey, secretAccessKey):
+def createTranscribeJob(fileName, region, bucketName, accessKey, secretAccessKey):
     # Initialize the Transcribe client
     transcribe = boto3.client(
         "transcribe",
+        region_name=region,
         aws_access_key_id=accessKey,
         aws_secret_access_key=secretAccessKey,
     )
 
     # Set up the full uri for the bucket and media file
-    mediaUri = "https://" + "s3-" + region + ".amazonaws.com/" + bucket + "/" + fileName
+    mediaUri = (
+        "https://" + "s3-" + region + ".amazonaws.com/" + bucketName + "/" + fileName
+    )
 
     print("\n==> Creating Job: " + "transcribe" + fileName + " for " + mediaUri)
 
@@ -91,10 +94,12 @@ def createTranscribeJob(region, bucket, fileName, accessKey, secretAccessKey):
 # Purpose: Helper function to return the status of a job running the Amazon Transcribe service
 # Parameters:
 #                 jobName - the unique jobName used to start the Amazon Transcribe job
+#                 region - the AWS region in which to run AWS services (e.g. "us-east-1")
 # ==================================================================================
-def getTranscriptionJobStatus(jobName, accessKey, secretAccessKey):
+def getTranscriptionJobStatus(jobName, region, accessKey, secretAccessKey):
     transcribe = boto3.client(
         "transcribe",
+        region_name=region,
         aws_access_key_id=accessKey,
         aws_secret_access_key=secretAccessKey,
     )
@@ -107,7 +112,7 @@ def getTranscriptionJobStatus(jobName, accessKey, secretAccessKey):
 # Function: getSubtitles
 # Purpose: Helper function to return the subtitle file based on the signed URI in S3 as produced by the Transcript job
 # Parameters:
-#                 transcriptURI - the signed S3 URI for the Transcribe output
+#                 subtitleURI - the signed S3 URI for the Transcribe output
 # ==================================================================================
 def getSubtitles(subtitleURI):
     # Get the resulting Transcription Job and store the JSON response in transcript
@@ -121,19 +126,21 @@ def getSubtitles(subtitleURI):
 # Purpose: Uploads a file from S3
 # Parameters:
 #                 fileName - the local filename of the file to upload
-#                 bucket - the bucket to upload the file into
+#                 region - the AWS region in which to run AWS services (e.g. "us-east-1")
+#                 bucketName - the bucket to upload the file into
 #                 key - the name of the object in S3
 # ==================================================================================
-def uploadFile(fileName, bucket, key, accessKey, secretAccessKey):
+def uploadFile(fileName, region, bucketName, key, accessKey, secretAccessKey):
     print("\n==> Uploading file " + fileName)
     s3 = boto3.client(
         "s3",
+        region_name=region,
         aws_access_key_id=accessKey,
         aws_secret_access_key=secretAccessKey,
     )
 
     try:
-        s3.upload_file(fileName, bucket, key)
+        s3.upload_file(fileName, bucketName, key)
     except botocore.exceptions.ClientError as e:
         logging.error(e)
 
@@ -143,33 +150,48 @@ def uploadFile(fileName, bucket, key, accessKey, secretAccessKey):
 # Purpose: Downloads a file from S3
 # Parameters:
 #                 fileName - the local filename of the file after it is downloaded
-#                 bucket - the bucket to get the object from
+#                 region - the AWS region in which to run AWS services (e.g. "us-east-1")
+#                 bucketName - the bucket to get the object from
 #                 key - the name of the object to be downloaded in S3
 # ==================================================================================
-def downloadFile(fileName, bucket, key, accessKey, secretAccessKey):
+def downloadFile(fileName, region, bucketName, key, accessKey, secretAccessKey):
     print("\n==> Downloading file " + fileName)
     s3 = boto3.client(
         "s3",
+        region_name=region,
         aws_access_key_id=accessKey,
         aws_secret_access_key=secretAccessKey,
     )
 
     try:
-        s3.download_file(bucket, key, fileName)
+        s3.download_file(bucketName, key, fileName)
     except botocore.exceptions.ClientError as e:
         logging.error(e)
 
 
-def createPresignedURL(bucket, key, accessKey, secretAccessKey, expiration=3600):
+# ==================================================================================
+# Function: createPresignedURL
+# Purpose: Creates an S3 signed url to access files
+# Parameters:
+#                 region - the AWS region in which to run AWS services (e.g. "us-east-1")
+#                 bucketName - the bucket to get the object from
+#                 key - the name of the object to be downloaded in S3
+# ==================================================================================
+def createPresignedURL(
+    region, bucketName, key, accessKey, secretAccessKey, expiration=3600
+):
     s3_client = boto3.client(
         "s3",
+        region_name=region,
         aws_access_key_id=accessKey,
         aws_secret_access_key=secretAccessKey,
     )
 
     try:
         response = s3_client.generate_presigned_url(
-            "get_object", Params={"Bucket": bucket, "Key": key}, ExpiresIn=expiration
+            "get_object",
+            Params={"Bucket": bucketName, "Key": key},
+            ExpiresIn=expiration,
         )
     except botocore.exceptions.ClientError as e:
         logging.error(e)

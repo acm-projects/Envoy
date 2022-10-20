@@ -38,7 +38,7 @@ print("\t" + bucketName + inputFileName)
 
 # Create transcription job
 response = createTranscribeJob(
-    bucketRegion, bucketName, inputFileName, accessKey, secretAccessKey
+    inputFileName, bucketRegion, bucketName, accessKey, secretAccessKey
 )
 
 # Loop until the job successfully completes
@@ -54,6 +54,7 @@ while response["TranscriptionJob"]["TranscriptionJobStatus"] == "IN_PROGRESS":
     time.sleep(5)
     response = getTranscriptionJobStatus(
         response["TranscriptionJob"]["TranscriptionJobName"],
+        bucketRegion,
         accessKey,
         secretAccessKey,
     )
@@ -68,7 +69,9 @@ print("\tEnd Time: " + str(response["TranscriptionJob"]["CompletionTime"]))
 print("\tSubtitle URI: " + subtitleURI)
 
 # Download the original video file
-downloadFile(inputFileName, bucketName, inputFileName, accessKey, secretAccessKey)
+downloadFile(
+    inputFileName, bucketRegion, bucketName, inputFileName, accessKey, secretAccessKey
+)
 
 # Write the subtitles to file
 subtitles = getSubtitles(subtitleURI)
@@ -90,7 +93,7 @@ translatedDelimitedSubtitles = translateFile(
     accessKey,
     secretAccessKey,
 )
-writeToFile("subtitles-" + outputLanguage + ".processed", delimitedSubtitles)
+writeToFile("subtitles-" + outputLanguage + ".processed", translatedDelimitedSubtitles)
 
 # Convert the translated delimited file back to translated text
 translatedCaptionsList = delimitedToSRTFile(
@@ -114,6 +117,7 @@ createVideo(
 # Upload the final video to S3
 response = uploadFile(
     "translated-" + inputFileName,
+    bucketRegion,
     bucketName,
     inputFileName,
     accessKey,
@@ -124,6 +128,7 @@ response = uploadFile(
 print(
     "\n"
     + createPresignedURL(
+        bucketRegion,
         bucketName,
         inputFileName,
         accessKey,

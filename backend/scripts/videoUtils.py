@@ -64,7 +64,7 @@ def createVideo(
         "\t" + strftime("%H:%M:%S", gmtime()),
         "Reading subtitle file: " + subtitlesFileName,
     )
-
+    
     subtitles = SubtitlesClip(subtitlesFileName, generator, encoding="utf_8_sig")
 
     print(
