@@ -16,18 +16,18 @@ import logging
 # Function: translateFile
 # Purpose: Translate a given file to the language specified in the target language code
 # Parameters:
-#                 srtFileName - the filename of the .srt file to be used
+#                 fileName - the filename of the .srt file to be used
 #                 sourceLangCode - the language code for the original content (e.g. English = "EN")
 #                 targetLangCode - the language code for the translated content (e.g. Spanish = "ES")
 #                 region - the AWS region in which to run the Translation (e.g. "us-east-1")
 # ==================================================================================
 def translateFile(
-    srtFileName, sourceLangCode, targetLangCode, region, accessKey, secretAccessKey
+    fileName, sourceLangCode, targetLangCode, region, accessKey, secretAccessKey
 ):
     print("\n==> Translating from " + sourceLangCode + " to " + targetLangCode)
     
-    # Open SRT file
-    text_file = open(srtFileName, "r")
+    # Open file
+    text_file = open(fileName, "r")
     text = text_file.read()
     text_file.close()
 
