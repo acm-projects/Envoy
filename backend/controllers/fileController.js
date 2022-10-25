@@ -44,7 +44,7 @@ const translateVideo = (videoFileName, languageCode) => {
 
     // Runs the video translation script
     return new Promise((resolve, reject) => {
-        PythonShell.run('translatevideo.py', options, (error, response) => {
+        PythonShell.run('translate_video.py', options, (error, response) => {
             if (error) {
                 console.log(error);
                 reject();

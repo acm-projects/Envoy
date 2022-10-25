@@ -88,7 +88,7 @@ write_to_file(f"{file_prefix}-subtitles-en.srt", subtitles)
 print("\n==> Translating subtitles")
 
 # Process the SRT for translation
-captions_list = srt_to_captions("subtitles-en.srt")
+captions_list = srt_to_captions(f"{file_prefix}-subtitles-en.srt")
 
 # Convert SRT file to a delimited file
 delimitedSubtitles = captions_to_delimited(captions_list)
@@ -131,10 +131,9 @@ create_video(
 )
 
 # Upload the final video to S3
-# Todo - REPLACE the second "translated-" with just input_filename after debugging
 response = upload_file(
     f"translated-{input_filename}",
-    f"translated-{input_filename}",
+    input_filename,
     bucket_region,
     bucket_name,
     access_key,
@@ -142,11 +141,10 @@ response = upload_file(
 )
 
 # Generate S3 signed URL
-# Todo - REMOVE "translated-" after debugging
 print(
     "\n"
     + create_presigned_url(
-        f"translated-{input_filename}",
+        input_filename,
         bucket_region,
         bucket_name,
         access_key,
