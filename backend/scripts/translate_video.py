@@ -18,7 +18,7 @@ from amazon_utils import *
 from srt_utils import *
 from video_utils import *
 
-os.chdir(os.getcwd() + "\\backend\\scripts")
+os.chdir(os.path.join(os.getcwd(), "backend", "scripts"))
 
 # Parse arguments
 bucket_region = sys.argv[1]  # Region where AWS services will be used
