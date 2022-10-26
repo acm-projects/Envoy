@@ -21,7 +21,15 @@ export default function Form() {
  
   const handleSignup = (event) => {
     event.preventDefault();
-    alert("Welcome to Envoy!");
+    const userInfo = { name,email,password };
+
+    fetch('http://localhost:5000/api/users/', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userInfo)
+    }).then(() => {
+      console.log('Signup Done!!');
+    })
   };
  
   return (
@@ -40,7 +48,7 @@ export default function Form() {
           <label className="label">Password</label>
           <input className="input" type="password" onChange={handlePasswordChange} value={password} />
  
-          <button className="button" type="submit" onClick={handleSignup}>
+          <button className="button" type="submit" onClick={(e)=>handleSignup(e)}>
             Sign Up
           </button>
         </form>
