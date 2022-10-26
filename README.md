@@ -91,17 +91,19 @@ General Use
 
 ## How To Use
 
-Frontend:
+**Frontend:**
 
 ```git clone``` -> ```npm install``` -> ```cd frontend``` -> ```npm install``` -> ```npm start```
 
 
-Backend:
 
-```git clone``` -> ```npm install``` -> ```npm run server```
+**Backend:**
+
+Refer to this [setup document](https://docs.google.com/document/d/15snUnVWnPzXeEvUg1jmbkXhKAf1ztTezQHDFPdPXgWc/edit?usp=sharing) to set up the server.
 
 
-Running the Full Application:
+
+**Running the Full Application:**
 
 ```npm run dev```
  
