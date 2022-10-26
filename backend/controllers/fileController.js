@@ -139,7 +139,10 @@ const uploadFile = asyncHandler(async (req, res) => {
         throw new Error('File must be in MP4 format');
     }
 
-    // TODO - Validate language code
+    if (outputLanguage !== 'zh' && outputLanguage !== 'hi' && outputLanguage !== 'es' && outputLanguage !== 'fr' && outputLanguage !== 'en') {
+        res.status(400);
+        throw new Error('This language is not supported!');
+    }
 
     // Uploads file to S3
     const fileName = randomFileName();
@@ -156,6 +159,13 @@ const uploadFile = asyncHandler(async (req, res) => {
     // Calls script to transcribe, translate, and add text-to-speech to the given video
     try {
         const fileUrl = await translateVideo(fileName, outputLanguage);
+
+        // Call cleanup script
+        PythonShell.run('cleanup.py', null, (error, response) => {
+            if (error) {
+                console.log(error);
+            }
+        });
 
         // Stores file information in database
         const fileInfo = await File.create({

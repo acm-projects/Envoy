@@ -6,9 +6,9 @@ Modified by the Envoy team
 
 """
 
-import math
 import html
 import webvtt
+import math
 
 # ==================================================================================
 # Function: srt_to_captions
@@ -21,14 +21,13 @@ def srt_to_captions(srt_filename):
     captions = []
     file = open(srt_filename, "r")
 
-    for srtcaption in webvtt.from_srt(file.name):
+    for srt_caption in webvtt.from_srt(file.name):
         caption = {}
-        print(f"\tSRT Caption start time: {srtcaption.start}")
-        print(f"\tSRT Caption end time: {srtcaption.end}")
-
-        caption["start"] = srtcaption.start.replace(".", ",")
-        caption["end"] = srtcaption.end.replace(".", ",")
-        caption["caption"] = srtcaption.lines[0]
+        print(f"\tSRT Caption start time: {srt_caption.start}")
+        print(f"\tSRT Caption end time: {srt_caption.end}")
+        caption["start"] = srt_caption.start.replace(".", ",")
+        caption["end"] = srt_caption.end.replace(".", ",")
+        caption["caption"] = srt_caption.lines[0]
         captions.append(caption)
 
     return captions
@@ -111,3 +110,47 @@ def write_to_file(filename, text):
     filehandle = open(filename, "w", encoding="utf_8_sig")
     filehandle.write(text)
     filehandle.close()
+
+
+# ==================================================================================
+# Function: format_srt_time_to_seconds
+# Purpose: Format an SRT timestamp from HH:MM:SS,mmm to seconds
+# Parameters:
+#                 srt_time - the srt timestamp to be formatted
+#
+# ==================================================================================
+def format_srt_time_to_seconds(srt_time):
+    hours, minutes, seconds = (srt_time.split(":"))[-3:]
+    hours = int(hours)
+    minutes = int(minutes)
+    seconds = float(seconds)
+    timeSeconds = float(3600 * hours + 60 * minutes + seconds)
+    return str(timeSeconds)
+
+
+# ==================================================================================
+# Function: format_seconds_to_srt_time
+# Purpose: Format seconds to an SRT timestamp (HH:MM:SS,mmm)
+# Parameters:
+#                 time_seconds - the time (in seconds) to be formatted
+#
+# ==================================================================================
+def format_seconds_to_srt_time(time_seconds):
+    ONE_HOUR = 60 * 60
+    ONE_MINUTE = 60
+    hours = math.floor(time_seconds / ONE_HOUR)
+    remainder = time_seconds - (hours * ONE_HOUR)
+    minutes = math.floor(remainder / 60)
+    remainder = remainder - (minutes * ONE_MINUTE)
+    seconds = math.floor(remainder)
+    remainder = remainder - seconds
+    millis = remainder
+    return (
+        str(hours).zfill(2)
+        + ":"
+        + str(minutes).zfill(2)
+        + ":"
+        + str(seconds).zfill(2)
+        + ","
+        + str(math.floor(millis * 1000)).zfill(3)
+    )

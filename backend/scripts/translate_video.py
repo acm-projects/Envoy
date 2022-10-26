@@ -11,12 +11,12 @@ Modified by the Envoy team
 import sys
 import time
 import os
-import glob
 import re
 
 from amazon_utils import *
 from srt_utils import *
 from video_utils import *
+from audio_utils import *
 
 os.chdir(os.path.join(os.getcwd(), "backend", "scripts"))
 
@@ -91,13 +91,13 @@ print("\n==> Translating subtitles")
 captions_list = srt_to_captions(f"{file_prefix}-subtitles-en.srt")
 
 # Convert SRT file to a delimited file
-delimitedSubtitles = captions_to_delimited(captions_list)
+delimited_subtitles = captions_to_delimited(captions_list)
 write_to_file(
-    f"{file_prefix}-subtitles-{output_language}.delimited", delimitedSubtitles
+    f"{file_prefix}-subtitles-{output_language}.delimited", delimited_subtitles
 )
 
 # Translate the delimited file
-translatedDelimitedSubtitles = translate_file(
+translated_delimited_subtitles = translate_file(
     f"{file_prefix}-subtitles-{output_language}.delimited",
     "en",
     output_language,
@@ -106,18 +106,32 @@ translatedDelimitedSubtitles = translate_file(
     secret_access_key,
 )
 write_to_file(
-    f"{file_prefix}-subtitles-{output_language}.processed", translatedDelimitedSubtitles
+    f"{file_prefix}-subtitles-{output_language}.processed",
+    translated_delimited_subtitles,
 )
 
 # Convert the translated delimited file back to translated text
-translatedCaptionsList = delimited_to_captions(
-    captions_list, translatedDelimitedSubtitles, "<span>"
+translated_captions_list = delimited_to_captions(
+    captions_list, translated_delimited_subtitles, "<span>"
 )
-translatedText = captions_to_srt(translatedCaptionsList)
+translated_text = captions_to_srt(translated_captions_list)
 
 # Write the translated text to an SRT file
-translatedSRTFileName = f"{file_prefix}-subtitles-{output_language}.srt"
-write_to_file(translatedSRTFileName, translatedText + "\n\n")
+translated_srt_filename = f"{file_prefix}-subtitles-{output_language}.srt"
+write_to_file(translated_srt_filename, translated_text + "\n\n")
+
+#
+# Speech synthesis
+#
+
+envoy_algorithm(
+    input_filename,
+    translated_srt_filename,
+    output_language,
+    bucket_region,
+    access_key,
+    secret_access_key,
+)
 
 #
 # Merging
@@ -125,14 +139,14 @@ write_to_file(translatedSRTFileName, translatedText + "\n\n")
 
 # Create the subtitled translated video
 create_video(
-    input_filename,
-    translatedSRTFileName,
     f"translated-{input_filename}",
+    translated_srt_filename,
+    f"final-{input_filename}",
 )
 
 # Upload the final video to S3
 response = upload_file(
-    f"translated-{input_filename}",
+    f"final-{input_filename}",
     input_filename,
     bucket_region,
     bucket_name,
@@ -142,8 +156,7 @@ response = upload_file(
 
 # Generate S3 signed URL
 print(
-    "\n"
-    + create_presigned_url(
+    create_presigned_url(
         input_filename,
         bucket_region,
         bucket_name,
@@ -151,19 +164,3 @@ print(
         secret_access_key,
     )
 )
-
-# Cleanup
-for filename in glob.glob("*.mp4"):
-    os.remove(filename)
-
-for filename in glob.glob("*.srt"):
-    os.remove(filename)
-
-for filename in glob.glob("*.delimited"):
-    os.remove(filename)
-
-for filename in glob.glob("*.processed"):
-    os.remove(filename)
-
-for filename in glob.glob("*.log"):
-    os.remove(filename)

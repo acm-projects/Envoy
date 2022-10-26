@@ -7,11 +7,11 @@ Modified by the Envoy team
 """
 
 import boto3
-import botocore
 import uuid
 import requests
 import logging
 
+from botocore.exceptions import ClientError
 
 # ==================================================================================
 # Function: transcribe_video
@@ -137,7 +137,7 @@ def translate_file(
 def upload_file(
     filename, output_filename, region, bucket_name, access_key, secret_access_key
 ):
-    print(f"\n==> Uploading file {filename}")
+    print(f"\n==> Uploading file {filename}\n")
 
     s3 = boto3.client(
         "s3",
@@ -148,7 +148,7 @@ def upload_file(
 
     try:
         s3.upload_file(filename, bucket_name, output_filename)
-    except botocore.exceptions.ClientError as e:
+    except ClientError as e:
         logging.error(e)
 
 
@@ -176,7 +176,7 @@ def download_file(
 
     try:
         s3.download_file(bucket_name, filename, output_filename)
-    except botocore.exceptions.ClientError as e:
+    except ClientError as e:
         logging.error(e)
 
 
@@ -204,7 +204,7 @@ def create_presigned_url(
             Params={"Bucket": bucketName, "Key": filename},
             ExpiresIn=expiration,
         )
-    except botocore.exceptions.ClientError as e:
+    except ClientError as e:
         logging.error(e)
         return None
 

@@ -6,8 +6,7 @@ Modified by the Envoy team
 
 """
 
-from moviepy.editor import *
-from moviepy import editor
+from moviepy import VideoFileClip, TextClip, CompositeVideoClip
 from moviepy.video.tools.subtitles import SubtitlesClip
 from time import gmtime, strftime
 
@@ -30,9 +29,9 @@ def create_video(
     # Load the original clip
     print(f"\tReading video clip: {input_filename}")
 
-    video = VideoFileClip(input_filename)
+    clip = VideoFileClip(input_filename)
 
-    print("\t\t==> Video duration: " + str(video.duration))
+    print("\t\t==> Video duration: " + str(clip.duration))
 
     # Create a lambda function that will be used to generate the subtitles for each sequence in the SRT
     def generator(txt):
@@ -54,8 +53,12 @@ def create_video(
     )
 
     # Overlay the text clip on the first video clip
-    final = CompositeVideoClip([video, subtitles.with_position(("center", "bottom"))])
+    final = CompositeVideoClip([clip, subtitles.with_position(("center", "bottom"))])
 
     print(f"\tWriting video file: {output_filename}")
 
     final.write_videofile(output_filename)
+
+    # Close file streams
+    clip.close()
+    final.close()
