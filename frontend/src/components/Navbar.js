@@ -15,7 +15,7 @@ export default function Navbar() {
                 <Link to='/upload'>Upload</Link>
             </li>
             <li>
-                <Link to='/account'>Account</Link>
+                <Link to='/library'>Library</Link>
             </li>
         </ul>
 
