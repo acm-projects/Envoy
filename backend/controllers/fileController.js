@@ -139,7 +139,13 @@ const uploadFile = asyncHandler(async (req, res) => {
         throw new Error('File must be in MP4 format');
     }
 
-    if (outputLanguage !== 'zh' && outputLanguage !== 'hi' && outputLanguage !== 'es' && outputLanguage !== 'fr' && outputLanguage !== 'en') {
+    const supportedLanguages = new Set([
+        'en', 'zh', 'hi', 'es', 'fr',
+        'ca', 'da', 'de', 'is', 'it',
+        'ja', 'ko', 'no', 'pl', 'pt',
+        'ro', 'ru', 'tr', 'cy']);
+
+    if (!supportedLanguages.has(outputLanguage)) {
         res.status(400);
         throw new Error('This language is not supported!');
     }
