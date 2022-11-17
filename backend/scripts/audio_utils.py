@@ -184,7 +184,7 @@ def synthesize_speech(
 # Purpose: Utility to write an audio file from the response from the Amazon Polly API
 # Parameters:
 #                 response - the Amazon Polly JSON response
-#                 audioFileName - the name (including extension) of the target audio file (e.g. "abc.mp3")
+#                 audio_filename - the name (including extension) of the target audio file (e.g. "abc.mp3")
 #
 # ==================================================================================
 def write_audio_stream(response, audio_filename):
@@ -220,7 +220,7 @@ def write_audio(output_filename, stream):
 # Function: get_voice_id
 # Purpose: Utility to return the name of the voice to use given a language code.
 # Parameters:
-#                 targetLangCode - the language code used for the target Amazon Polly output
+#                 target_lang_code - the language code used for the target Amazon Polly output
 #
 # ==================================================================================
 def get_voice_id(target_lang_code):
