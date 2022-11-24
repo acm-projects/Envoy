@@ -2,6 +2,9 @@ import React from 'react'
 import Navbar from '../components/Navbar';
 import Video from '../components/video';
 import Card from '../components/card';
+import LeftMenu from '../components/LeftMenu';
+import './styles/library.css'
+
 
 const Library = () => {
   return (
@@ -9,6 +12,9 @@ const Library = () => {
     <Navbar />
       <h1>Library page</h1>
     <Card />
+    <Card />
+    <Card />
+    <LeftMenu />
     </div>
   )
 }
