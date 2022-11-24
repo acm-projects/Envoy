@@ -11,7 +11,7 @@ ReactDOM.render(
 
     <Router>
       <Routes>
-        <Route path='/' element={<App/>}/>
+        <Route path='/' element={<App/>}/> 
         <Route path='/upload' element={<Upload/>}/>
         <Route path='/library' element={<Library/>}/>
         <Route path='/login' element={<Login/>}/>
