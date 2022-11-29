@@ -4,10 +4,10 @@ import Navbar from '../components/Navbar';
 //links navbar pages
 const Upload = () => {
   return (
-    <div>
-      <Navbar />
-      <h1>Upload page</h1>
+    <div class="center">
+      <h1>Welcome to Envoy!</h1>
     </div>
+
   )
 }
 

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import './styles/Form.css'
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 export default function LoginForm() {
  
+  const navigate = useNavigate();
+
   const [name, setName] = useState(null);
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [errorMessage, seterrorMessage] = useState(null);
+  const [errorMessage, seterrorMessage] = useState('');
   
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -27,7 +30,7 @@ export default function LoginForm() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userInfo)
   };
-  fetch('http://localhost:5000/api/users/login/', requestOptions)
+  fetch('http://54.209.73.79:5000/api/users/login/', requestOptions)
         .then(async response => {
             const isJson = response.headers.get('content-type')?.includes('application/json');
             const data = isJson && await response.json();
@@ -42,10 +45,12 @@ export default function LoginForm() {
             setName(data.name);
             setToken(data.token);
             console.log(name);
+            navigate('/upload');
         })
         .catch(error => {
           seterrorMessage(error.toString());
             console.error('There was an error!', error);
+            seterrorMessage('There was an error!');
         });
       };
  
@@ -63,6 +68,7 @@ export default function LoginForm() {
           <button className="button" type="submit" onClick={(e)=>handleLogin(e)}>
             Login
           </button>
+          <label className="label">{errorMessage}</label>
         </form> 
       </div>
     </div>
