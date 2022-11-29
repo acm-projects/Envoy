@@ -1,7 +1,6 @@
 .form {
     height: 390px;
     position: relative;
-
 }
 
 .center {
@@ -38,7 +37,7 @@
   
 .button {
     color: white;
-    background-color: black;
+    background-color: rgb(90, 0, 235);
     font-size: medium;
     display: block;
     padding: 5px;

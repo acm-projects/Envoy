@@ -6,7 +6,7 @@ const Account = () => {
     <div>
     <Navbar />
       <h1>Account page</h1>
-      </div>
+    </div>
   )
 }
 
