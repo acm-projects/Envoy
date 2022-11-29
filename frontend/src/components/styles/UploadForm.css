@@ -1,7 +1,6 @@
-.form {
+.form_upload {
     background: white;
     margin: 15px;
-    margin-bottom: 140px;
     margin-left: 25px;
     margin-right: 25px;
 }
@@ -11,11 +10,11 @@ img {
     height: 100px;
 }
 
-.center {
+.center_upload {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -45%);
     padding: 10px;
     background-color: white;
 }
@@ -32,19 +31,7 @@ img {
     display: block;
     border-radius: 5px;
     border-width: 1px;
-    width: 600px;
-    padding: 10px 8px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    font-size: medium;
-    margin-right: 10px;
-}
-
-input {
-    display: block;
-    border-radius: 5px;
-    border-width: 1px;
-    width: 1000px;
+    width: 275px;
     padding: 10px 8px;
     margin: 8px 0;
     box-sizing: border-box;

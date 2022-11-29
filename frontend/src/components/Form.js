@@ -29,16 +29,26 @@ export default function Form() {
  
   const handleSignup = (event) => {
     event.preventDefault();
-    alert("Welcome to Envoy!");
+    const userInfo = { name,email,password };
+
+    fetch('http://54.209.73.79:5000/api/users/', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userInfo)
+    }).then(() => {
+      console.log('Signup Done!!');
+    })
   };
  
   return (
-    <div class="center">
-      <div className="form">
-        <div className="heading">
-          <h1>{t('label.signup')}</h1>
-        </div>
-        <form>
+    <div class="center_new">
+      <div class="wrapper_new">
+        <div class="rectangle_new"></div>
+        <div className="form_new">
+          <div className="heading_new">
+            <h1>{t('label.signup')}</h1>
+          </div>
+          <form>
           <label className="label"> {t('label.name')} </label>
           <input className="input" type="text" onChange={handleNameChange} value={name} />
  
@@ -74,6 +84,7 @@ export default function Form() {
             {t('label.signup')}
           </button>
         </form>
+        </div>
       </div>
     </div>
   );

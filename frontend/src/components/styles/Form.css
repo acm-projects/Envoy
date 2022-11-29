@@ -1,9 +1,27 @@
-.form {
+.rectangle_new {
+    height: 500px;
+    width: 368px;
+    border-radius: 25px;
+    background-color: rgb(118, 200, 255);
+  }
+
+.form_new {
     height: 390px;
-    position: relative;
+    margin: 0 auto;
+    padding: 35px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /*position: relative;*/
+
 }
 
-.center {
+.wrapper_new {
+    position: relative;
+  }
+
+.center_new {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,20 +29,20 @@
     padding: 10px;
 }
 
-.heading {
+.heading_new {
     display: flex;
     justify-content: center;
     padding-bottom: 10px;
 }
 
-.label {
+.label_new {
     font-size: medium;
     color: black;
     display: flex;
     justify-content: center;
 }
     
-.input {
+.input_new {
     display: block;
     border-radius: 5px;
     border-width: 1px;
@@ -35,9 +53,9 @@
     font-size: medium;
 }
   
-.button {
+.button_new {
     color: white;
-    background-color: rgb(90, 0, 235);
+    background-color: black;
     font-size: medium;
     display: block;
     padding: 5px;

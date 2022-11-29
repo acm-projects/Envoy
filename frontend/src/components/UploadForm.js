@@ -40,8 +40,8 @@ export default function UploadForm() {
     height: 1200, width: 1600
     }}>
     </div>
-    <div class="center">
-        <div className="form">
+    <div class="center_upload">
+        <div className="form_upload">
           <form>
             <div style={headingStyles}>
               <img src={uploadIcon} alt="Upload Icon" />
