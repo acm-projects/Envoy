@@ -1,5 +1,23 @@
+.rectangle {
+    height: 420px;
+    width: 350px;
+    border-radius: 25px;
+    background-color: rgb(118, 200, 255);
+  }
+
 .form {
     height: 390px;
+    margin: 0 auto;
+    padding: 35px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /*position: relative;*/
+
+}
+
+.wrapper {
     position: relative;
 }
 

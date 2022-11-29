@@ -9,5 +9,6 @@ export default function Upload(props) {
       <Navbar />
       <UploadForm />
     </div>
+
   )
 }
