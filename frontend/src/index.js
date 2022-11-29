@@ -6,6 +6,7 @@ import Upload from './pages/Upload';
 import Library from './pages/Library';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import './features/internationalization/i18n';
 
 ReactDOM.render(
 
