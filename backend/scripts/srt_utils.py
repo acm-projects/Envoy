@@ -99,20 +99,6 @@ def delimited_to_captions(source_captions, delimited_captions, delimiter):
 
 
 # ==================================================================================
-# Function: writeToFile
-# Purpose: Helper method that writes the given text to a file
-# Parameters:
-#                 filename - File name of the new file
-#                 text - The text to be written in the file
-#
-# ==================================================================================
-def write_to_file(filename, text):
-    filehandle = open(filename, "w", encoding="utf_8_sig")
-    filehandle.write(text)
-    filehandle.close()
-
-
-# ==================================================================================
 # Function: format_srt_time_to_seconds
 # Purpose: Format an SRT timestamp from HH:MM:SS,mmm to seconds
 # Parameters:
@@ -154,3 +140,16 @@ def format_seconds_to_srt_time(time_seconds):
         + ","
         + str(math.floor(millis * 1000)).zfill(3)
     )
+
+
+# ==================================================================================
+# Function: writeToFile
+# Purpose: Helper method that writes the given text to a file
+# Parameters:
+#                 filename - File name of the new file
+#                 text - The text to be written in the file
+#
+# ==================================================================================
+def write_to_file(filename, text):
+    with open(filename, "w", encoding="utf_8_sig") as file:
+        file.write(text)

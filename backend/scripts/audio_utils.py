@@ -184,7 +184,7 @@ def synthesize_speech(
 # Purpose: Utility to write an audio file from the response from the Amazon Polly API
 # Parameters:
 #                 response - the Amazon Polly JSON response
-#                 audioFileName - the name (including extension) of the target audio file (e.g. "abc.mp3")
+#                 audio_filename - the name (including extension) of the target audio file (e.g. "abc.mp3")
 #
 # ==================================================================================
 def write_audio_stream(response, audio_filename):
@@ -219,23 +219,31 @@ def write_audio(output_filename, stream):
 # ==================================================================================
 # Function: get_voice_id
 # Purpose: Utility to return the name of the voice to use given a language code.
-# Currently supported languages: Mandarin (zh), Hindi (hi), Spanish (es), French (fr)
 # Parameters:
-#                 targetLangCode - the language code used for the target Amazon Polly output
+#                 target_lang_code - the language code used for the target Amazon Polly output
 #
 # ==================================================================================
 def get_voice_id(target_lang_code):
-    if target_lang_code == "zh":
-        voiceId = "Zhiyu"
-    elif target_lang_code == "hi":
-        voiceId = "Aditi"
-    elif target_lang_code == "es":
-        voiceId = "Lupe"
-    elif target_lang_code == "fr":
-        voiceId = "Chantal"
-    elif target_lang_code == "en":
-        voiceId = "Salli"
-    else:
-        voiceId = ""
+    voice_ids = {
+        "en": "Salli",
+        "zh": "Zhiyu",
+        "hi": "Aditi",
+        "es": "Lupe",
+        "fr": "Chantal",
+        "ca": "Arlet",
+        "da": "Naja",
+        "de": "Vicki",
+        "is": "Dora",
+        "it": "Bianca",
+        "ja": "Takumi",
+        "ko": "Seoyeon",
+        "no": "Liv",
+        "pl": "Ewa",
+        "pt": "Camila",
+        "ro": "Carmen",
+        "ru": "Tatyana",
+        "tr": "Filiz",
+        "cy": "Gwyneth",
+    }
 
-    return voiceId
+    return voice_ids.get(target_lang_code)
